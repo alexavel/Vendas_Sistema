@@ -71,6 +71,8 @@ type
     qryVendaItemvlUnitario: TBCDField;
     qryVendaItemvlTotal: TBCDField;
     qryVendaItemflStatus: TBooleanField;
+    qryVendaItemdeDescricao: TStringField;
+    qryVendadeNomeCliente: TStringField;
   private
     { Private declarations }
   public

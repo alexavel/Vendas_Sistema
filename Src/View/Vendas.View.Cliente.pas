@@ -12,7 +12,7 @@ type
   [TTituloFormAtributes('Cadastro de Clientes',true)]
   TfrmCliente = class(TfrmBaseCadastro)
   public
-    [TValidaCamposAtributes('nucpf')]
+    [TEventoOnExitAtributes('nucpf')]
     procedure VerificarCPF(Sender: TObject);
   end;
 
@@ -27,7 +27,12 @@ uses
 
 procedure TfrmCliente.VerificarCPF(Sender: TObject);
 begin
-  TClienteController.New(Sender).ValidarCPF;
+  var lControleCliente := TClienteController.New(Sender);
+  try
+    lControleCliente.ValidarCPF;
+  finally
+    lControleCliente.Free;
+  end;
 end;
 
 end.

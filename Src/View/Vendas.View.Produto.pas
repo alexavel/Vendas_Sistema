@@ -12,9 +12,9 @@ type
   [TTituloFormAtributes('Cadastro de Produtos',true)]
   TfrmProduto = class(TfrmBaseCadastro)
   public
-    [TValidaCamposAtributes('cdfornecedor')]
+    [TEventoOnExitAtributes('cdfornecedor')]
     procedure VerificarExisteFornecedor(Sender: TObject);
-    [TValidaCamposAtributes('vlUnitario')]
+    [TEventoOnExitAtributes('vlUnitario')]
     procedure VerificarPrecoZerado(Sender: TObject);
   end;
 

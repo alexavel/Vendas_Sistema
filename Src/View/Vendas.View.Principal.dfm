@@ -34,6 +34,15 @@ object frmMain: TfrmMain
         Action = actVenda
       end
     end
+    object Relatrios1: TMenuItem
+      Caption = '&Relat'#243'rios'
+      object ListagemdeClientes1: TMenuItem
+        Action = actReportCliente
+      end
+      object actReportVenda1: TMenuItem
+        Action = actReportVenda
+      end
+    end
   end
   object actMain: TActionList
     Left = 32
@@ -57,6 +66,16 @@ object frmMain: TfrmMain
       Category = 'Movimentacao'
       Caption = 'Vendas'
       OnExecute = actVendaExecute
+    end
+    object actReportCliente: TAction
+      Category = 'Relatorio'
+      Caption = 'Listagem de Clientes'
+      OnExecute = actReportClienteExecute
+    end
+    object actReportVenda: TAction
+      Category = 'Relatorio'
+      Caption = 'Relat'#243'rio de Vendas'
+      OnExecute = actReportVendaExecute
     end
   end
 end

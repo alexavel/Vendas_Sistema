@@ -22,12 +22,13 @@ type
 
   IBaseCadastro = interface
     ['{AD0F9E33-AE8B-4E76-A8F0-6DFFAF390D3C}']
+    /// <summary>
+    ///   Função que inicia uma ação do tipo TTipoAcao.
+    /// </summary>
+    /// <param name="AAcao">
+    ///   Parâmetro que instância uma ação no CRUD do tipo: taNovo, taEditar, taExcluir...
+    /// </param>
     function IniciarAcao(const AAcao: TTipoAcao) : IBaseCadastro;
-    function Novo: IBaseCadastro;
-    function Editar: IBaseCadastro;
-    function Excluir: IBaseCadastro;
-    function Gravar: IBaseCadastro;
-    function Cancelar: IBaseCadastro;
   end;
 
 implementation

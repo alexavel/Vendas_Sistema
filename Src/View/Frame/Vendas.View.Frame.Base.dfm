@@ -20,7 +20,7 @@ object frameBase: TframeBase
       Width = 521
       Height = 305
       Margins.Top = 10
-      ActivePage = tbsChildCadastro
+      ActivePage = tbsChildListagem
       Align = alClient
       TabOrder = 0
       object tbsChildListagem: TTabSheet
@@ -32,6 +32,7 @@ object frameBase: TframeBase
           Height = 275
           Align = alClient
           DataSource = dsBaseChild
+          Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
           TabOrder = 0
           TitleFont.Charset = DEFAULT_CHARSET
           TitleFont.Color = clWindowText
@@ -162,7 +163,6 @@ object frameBase: TframeBase
     end
   end
   object dsBaseChild: TDataSource
-    DataSet = dmVendas.qryVendaItem
     Left = 568
     Top = 227
   end

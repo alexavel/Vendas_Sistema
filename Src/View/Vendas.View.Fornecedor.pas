@@ -12,7 +12,7 @@ type
   [TTituloFormAtributes('Cadastro de Fornecedores',true)]
   TfrmFornecedor = class(TfrmBaseCadastro)
   public
-    [TValidaCamposAtributes('nucnpj')]
+    [TEventoOnExitAtributes('nucnpj')]
     procedure VerificarCNPJ(Sender: TObject);
   end;
 

@@ -1,54 +1,55 @@
 inherited frmVenda: TfrmVenda
   Caption = 'frmVenda'
-  ClientHeight = 446
-  ClientWidth = 899
-  ExplicitWidth = 911
+  ClientWidth = 976
+  ExplicitWidth = 988
+  ExplicitHeight = 483
   TextHeight = 15
   inherited pgBaseCadasro: TPageControl
-    Width = 769
-    Height = 427
+    Width = 846
     ActivePage = tbsFormulario
-    ExplicitWidth = 769
+    ExplicitWidth = 846
     inherited tbsListagem: TTabSheet
-      ExplicitWidth = 761
+      ExplicitWidth = 838
+      ExplicitHeight = 396
       inherited dbgListagem: TDBGrid
-        Width = 761
-        Height = 397
+        Width = 838
+        Height = 396
       end
     end
     inherited tbsFormulario: TTabSheet
-      ExplicitWidth = 761
+      ExplicitWidth = 838
+      ExplicitHeight = 396
       inherited gpbDetalhes: TGroupBox
         Top = 10
-        Width = 755
-        Height = 384
+        Width = 832
+        Height = 383
         Margins.Top = 10
         ExplicitTop = 10
-        ExplicitWidth = 755
-        ExplicitHeight = 384
-        inline frameBaseTeste: TframeBase
+        ExplicitWidth = 832
+        ExplicitHeight = 383
+        inline frameVendaItem: TframeVendaItem
           Left = 3
-          Top = 69
-          Width = 749
-          Height = 296
+          Top = 136
+          Width = 826
+          Height = 244
           CustomHint = hitBalao
           TabOrder = 0
           ExplicitLeft = 3
-          ExplicitTop = 69
-          ExplicitWidth = 749
-          ExplicitHeight = 296
+          ExplicitTop = 136
+          ExplicitWidth = 826
+          ExplicitHeight = 244
           inherited pnlCenter: TPanel
-            Width = 636
-            Height = 290
+            Width = 713
+            Height = 238
             CustomHint = hitBalao
-            ExplicitWidth = 636
-            ExplicitHeight = 290
+            ExplicitWidth = 713
+            ExplicitHeight = 238
             inherited pgChildBase: TPageControl
-              Width = 630
-              Height = 277
+              Width = 707
+              Height = 225
               CustomHint = hitBalao
-              ExplicitWidth = 630
-              ExplicitHeight = 277
+              ExplicitWidth = 707
+              ExplicitHeight = 225
               inherited tbsChildListagem: TTabSheet
                 CustomHint = hitBalao
                 inherited dbgFrame: TDBGrid
@@ -57,17 +58,17 @@ inherited frmVenda: TfrmVenda
               end
               inherited tbsChildCadastro: TTabSheet
                 CustomHint = hitBalao
-                ExplicitWidth = 622
-                ExplicitHeight = 247
+                ExplicitWidth = 699
+                ExplicitHeight = 195
               end
             end
           end
           inherited pnlSide: TPanel
-            Left = 645
-            Height = 283
+            Left = 722
+            Height = 231
             CustomHint = hitBalao
-            ExplicitLeft = 645
-            ExplicitHeight = 283
+            ExplicitLeft = 722
+            ExplicitHeight = 231
             inherited btnNew: TButton
               CustomHint = hitBalao
             end
@@ -84,25 +85,31 @@ inherited frmVenda: TfrmVenda
               CustomHint = hitBalao
             end
           end
+          inherited actFrameAcoes: TActionList
+            Left = 576
+            Top = 99
+          end
+          inherited dsBaseChild: TDataSource
+            Left = 576
+            Top = 163
+          end
         end
       end
     end
   end
   inherited pnlSide: TPanel
-    Left = 772
-    Height = 421
-    ExplicitLeft = 768
-    ExplicitHeight = 420
+    Left = 849
+    ExplicitLeft = 845
+    ExplicitHeight = 419
     inherited btnSair: TButton
-      Top = 391
-      ExplicitTop = 390
+      Top = 390
+      ExplicitTop = 389
     end
   end
   inherited stbFooter: TStatusBar
-    Top = 427
-    Width = 899
-    ExplicitTop = 426
-    ExplicitWidth = 895
+    Width = 976
+    ExplicitTop = 425
+    ExplicitWidth = 972
   end
   inherited actBaseFormulario: TActionList
     Left = 828

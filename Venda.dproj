@@ -145,6 +145,37 @@
             <Form>frmCliente</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Src\View\Frame\Vendas.View.Frame.VendaItem.pas">
+            <Form>frameVendaItem</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Src\View\Vendas.View.BaseReport.pas">
+            <Form>frmBaseReport</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Src\View\Printers\Vendas.View.BasePrinter.pas">
+            <Form>frmBasePrinter</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Src\Controller\Vendas.Controller.BaseReport.pas"/>
+        <DCCReference Include="Src\Interfaces\Vendas.Interfaces.BaseReport.pas"/>
+        <DCCReference Include="Src\View\Report\Vendas.View.Report.Cliente.pas">
+            <Form>frmReportCliente</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Src\View\Printers\Vendas.View.Printer.Cliente.pas">
+            <Form>frmPrinterCliente</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Src\View\Report\Vendas.View.Report.Venda.pas">
+            <Form>frmReportVenda</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Src\View\Printers\Vendas.View.Printer.Venda.pas">
+            <Form>frmPrinterVenda</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -172,7 +203,7 @@
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="4">
-                <DeployFile LocalName="bin\Venda.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="..\Projeto_Vendas\bin\Venda.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>Venda.exe</RemoteName>
                         <Overwrite>true</Overwrite>
@@ -1005,6 +1036,7 @@
                 <Platform value="Win32">True</Platform>
                 <Platform value="Win64">False</Platform>
             </Platforms>
+            <ModelSupport>False</ModelSupport>
         </BorlandProject>
         <ProjectFileVersion>12</ProjectFileVersion>
     </ProjectExtensions>

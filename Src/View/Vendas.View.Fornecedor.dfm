@@ -1,19 +1,20 @@
 inherited frmFornecedor: TfrmFornecedor
   Caption = 'frmFornecedor'
+  ClientHeight = 446
   ClientWidth = 678
-  ExplicitHeight = 485
+  ExplicitWidth = 690
   TextHeight = 15
   inherited pgBaseCadasro: TPageControl
     Width = 548
-    ExplicitWidth = 544
+    Height = 427
+    ExplicitWidth = 548
     inherited tbsListagem: TTabSheet
-      ExplicitHeight = 398
-      inherited dbgListagem: TDBGrid
-        Height = 398
-      end
+      ExplicitWidth = 540
+      ExplicitHeight = 396
     end
     inherited tbsFormulario: TTabSheet
-      ExplicitHeight = 398
+      ExplicitWidth = 540
+      ExplicitHeight = 396
       inherited gpbDetalhes: TGroupBox
         Height = 392
         ExplicitWidth = 534
@@ -23,15 +24,13 @@ inherited frmFornecedor: TfrmFornecedor
   end
   inherited pnlSide: TPanel
     Left = 551
-    ExplicitLeft = 547
-    inherited btnSair: TButton
-      Top = 392
-      ExplicitTop = 391
-    end
+    Height = 421
+    ExplicitLeft = 551
   end
   inherited stbFooter: TStatusBar
+    Top = 427
     Width = 678
-    ExplicitWidth = 674
+    ExplicitWidth = 678
   end
   inherited dsBase: TDataSource
     DataSet = dmVendas.qryFornecedor

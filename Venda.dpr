@@ -18,7 +18,16 @@ uses
   Vendas.View.Frame.Base in 'Src\View\Frame\Vendas.View.Frame.Base.pas' {frameBase: TFrame},
   Vendas.Controller.BaseFrame in 'Src\Controller\Vendas.Controller.BaseFrame.pas',
   Vendas.Controller.Vendas in 'Src\Controller\Vendas.Controller.Vendas.pas',
-  Vendas.View.Cliente in 'Src\View\Vendas.View.Cliente.pas' {frmCliente};
+  Vendas.View.Cliente in 'Src\View\Vendas.View.Cliente.pas' {frmCliente},
+  Vendas.View.Frame.VendaItem in 'Src\View\Frame\Vendas.View.Frame.VendaItem.pas' {frameVendaItem: TFrame},
+  Vendas.View.BaseReport in 'Src\View\Vendas.View.BaseReport.pas' {frmBaseReport},
+  Vendas.View.BasePrinter in 'Src\View\Printers\Vendas.View.BasePrinter.pas' {frmBasePrinter},
+  Vendas.Controller.BaseReport in 'Src\Controller\Vendas.Controller.BaseReport.pas',
+  Vendas.Interfaces.BaseReport in 'Src\Interfaces\Vendas.Interfaces.BaseReport.pas',
+  Vendas.View.Report.Cliente in 'Src\View\Report\Vendas.View.Report.Cliente.pas' {frmReportCliente},
+  Vendas.View.Printer.Cliente in 'Src\View\Printers\Vendas.View.Printer.Cliente.pas' {frmPrinterCliente},
+  Vendas.View.Report.Venda in 'Src\View\Report\Vendas.View.Report.Venda.pas' {frmReportVenda},
+  Vendas.View.Printer.Venda in 'Src\View\Printers\Vendas.View.Printer.Venda.pas' {frmPrinterVenda};
 
 {$R *.res}
 

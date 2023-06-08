@@ -5,7 +5,7 @@ interface
 uses
   Vendas.Interfaces.BaseCadastro, Vcl.Forms, System.Classes, Vcl.ActnList, Generics.Collections,
   Vcl.ComCtrls, RTTI, Vendas.Classes.Atributo, Data.DB, System.SysUtils, Vcl.DBGrids,
-  Vcl.DBCtrls, Vcl.Controls, Vcl.Dialogs, System.Variants;
+  Vcl.DBCtrls, Vcl.Controls, Vcl.Dialogs, System.Variants, FireDAC.Comp.Client;
 const
   csPOSICAO_LEFT_EDIT = 20;
   csPOSICAO_TOP_EDIT = 25;
@@ -23,39 +23,128 @@ Type
     FDataSourcePrincipal: TDataSource;
     FDBGridListagem: TDBGrid;
     FGeraEdits: Boolean;
-    FFieldAutoIncremento: TField;
+    FPrimariKeyFieldBase: TField;
+    /// <summary>
+    /// Faz coleta dos atributos associados ao CRUD
+    /// </summary>
     procedure ColetarAtributos;
+    /// <summary>
+    /// Faz coleta dos métodos para atribuir a eventos dos componentes edit como: OnExit, OnEnter...
+    /// </summary>
     procedure ColetarMetodoEditAtributos;
+    /// <summary>
+    /// Faz o controle de botões de edição do crud
+    /// </summary>
     procedure HabilitarBotoes;
+    /// <summary>
+    /// Seleciona página de trabalho conforme ação chamada
+    /// </summary>
     procedure SelecionarPagina;
+    /// <summary>
+    /// Configura o controle da base de dados principal do CRUD
+    /// </summary>
     procedure ConfigurarBasePrincipal(ADataSource: TDataSource);
+    /// <summary>
+    /// Configura o controle do TPageControl do CRUD
+    /// </summary>
     procedure ConfigurarPaginaCadastro(lRTTIField: TRttiField);
+    /// <summary>
+    /// Faz a configuração e controle do DBGrid principal da listagem
+    /// </summary>
     procedure ConfigurarGrid(lRTTIField: TRttiField);
+    /// <summary>
+    /// Configura as ações e opreações do crud pelo atributo
+    /// </summary>
     procedure ConfiguraAtibutos(lRTTIField: TRttiField);
+    /// <summary>
+    /// Atribui o titulo ao formulário
+    /// </summary>
     procedure AtribuirCaptionForm(const ACaptionForm: string);
+    /// <summary>
+    /// Gera os edits automáticos
+    /// </summary>
     procedure GerarEditsAutomatico;
+    /// <summary>
+    /// Identifica e instancia a chave primária para controle
+    /// </summary>
+    procedure CapturaChavePrimaria;
+    /// <summary>
+    /// Contrutor do componente Edit
+    /// </summary>
     procedure ConstruirEdit(ATabSheetCadastro: TTabSheet;
       lField: TField; var lTop, lLeft: Integer);
+    /// <summary>
+    /// Contrutor do componente CheckBox
+    /// </summary>
     procedure ConstruirCheckBox(ATabSheetCadastro: TTabSheet;
       lField: TField; var lTop, lLeft: Integer);
+    /// <summary>
+    /// Atualiza posicionamento automático dos edits
+    /// </summary>
     procedure AtualizarPosicaoEdits(AComponente: TComponent;
       ATabSheetCadastro: TTabSheet; var lLeft: Integer; var lTop: Integer);
+    /// <summary>
+    /// Atualiza posicionamento LEFT dos edits criados automáticamente
+    /// </summary>
     procedure AtualizarPosicaoLeftEdit(AComponente: TComponent; var lLeft: Integer);
-    procedure ColetaFrames;
+    /// <summary>
+    /// Coleta os Frames com subtabelas para controle de informação
+    /// </summary>
+    procedure ColetarFrames;
   protected
+    /// <summary>
+    /// Seleciona uma célula no DBgrid para edição
+    /// </summary>
     procedure SelecionarCelula(Sender: TObject);
+    /// <summary>
+    /// Cria um novo registro
+    /// </summary>
+    function Novo: IBaseCadastro;
+    /// <summary>
+    /// Habilita a edição de um registro selecionado
+    /// </summary>
+    function Editar: IBaseCadastro;
+    /// <summary>
+    /// Deleta um registro selecionado
+    /// </summary>
+    function Excluir: IBaseCadastro;
+    /// <summary>
+    /// Grava um registro em edição
+    /// </summary>
+    function Gravar: IBaseCadastro;
+    /// <summary>
+    /// Cancela a edição de um registro
+    /// </summary>
+    function Cancelar: IBaseCadastro;
+    /// <summary>
+    ///  Varifica se o campo pode ser exibido
+    /// </summary>
+    /// <param name="AField">
+    ///  O campo FIELD é passado como paramentro para ser verificado se tem visibilidade;
+    /// </param>
+    function ValidarCampoVisivel(
+  const AFieldName: String): Boolean;
+    /// <summary>
+    ///  Cria o controle para os formulários
+    /// </summary>
+    /// <param name="AEmbedded">
+    ///  Injeta a dependencia do Fromulário que fornececera as informações para a automação das ações
+    /// </param>
+    constructor create(AEmbedded: TForm);
+    /// <summary>
+    ///  Cria uma lista com os eventos do CRUD
+    /// </summary>
     property ListaAcoes: TDicionarioAcoes read FListaAcoes write FListaAcoes;
   public
-    constructor create(AEmbedded: TForm);
-    destructor Destroy; override;
+    /// <summary>
+    ///  Instancia o controle
+    /// </summary>
+    /// <param name="AEmbedded">
+    ///  Injeta a dependencia do Fromulário que fornececera as informações para a automação das ações
+    /// </param>
     class function New(AEmbedded: TForm): IBaseCadastro;
-
     function IniciarAcao(const AAcao: TTipoAcao): IBaseCadastro;
-    function Novo: IBaseCadastro;
-    function Editar: IBaseCadastro;
-    function Excluir: IBaseCadastro;
-    function Gravar: IBaseCadastro;
-    function Cancelar: IBaseCadastro;
+    destructor Destroy; override;
   end;
 
 implementation
@@ -66,6 +155,7 @@ uses
 resourcestring
   csPREFIXO_CHECKBOX = 'chk%s';
   csPREFIXO_EDIT = 'edt%s';
+  csEVENTO_ONEXIT = 'OnExit';
 
 { TBaseCadstro }
 
@@ -83,9 +173,10 @@ begin
   ColetarAtributos;
   FAcaoAtual := taBrowse;
   HabilitarBotoes;
+  CapturaChavePrimaria;
   GerarEditsAutomatico;
   ColetarMetodoEditAtributos;
-  ColetaFrames;
+  ColetarFrames;
 end;
 
 destructor TBaseCadastroController.Destroy;
@@ -120,7 +211,7 @@ end;
 function TBaseCadastroController.Gravar: IBaseCadastro;
 var
   lFrame: TFrame;
-  lField: TField;
+//  lField: TField;
   lDataSet: TDataSet;
 begin
   try
@@ -131,23 +222,24 @@ begin
       for lFrame in FListaDataFrames.keys do
       begin
         lDataSet:= FListaDataFrames[lFrame].DataSet;
-        lField := lDataSet.FindField(FFieldAutoIncremento.FieldName);
-        if lDataSet.Modified then
+//        lField := lDataSet.FindField(FPrimariKeyFieldBase.FieldName);
+        if lDataSet.State in dsEditModes then
         begin
-          lDataSet.First;
-          while not lDataSet.Eof do
-          begin
-            if lField.value <> null then
-            begin
-              lDataSet.Next;
-              Continue;
-            end;
-
-            lDataSet.Edit;
-            lField.Value := FFieldAutoIncremento.Value;
-            lDataSet.post;
-            lDataSet.Next;
-          end;
+          lDataSet.post;
+//          lDataSet.First;
+//          while not lDataSet.Eof do
+//          begin
+//            if lField.value <> null then
+//            begin
+//              lDataSet.Next;
+//              Continue;
+//            end;
+//
+//            lDataSet.Edit;
+//            lField.Value := FPrimariKeyFieldBase.Value;
+//            lDataSet.post;
+//            lDataSet.Next;
+//          end;
         end;
       end;
       dmVendas.fdConetor.Commit
@@ -209,6 +301,24 @@ begin
     FPageBaseCadasro.ActivePage :=  FListaTabSheets.Items[csEdicao];
 end;
 
+function TBaseCadastroController.ValidarCampoVisivel(
+  const AFieldName: String): Boolean;
+var
+  lRTTIContexto: TRttiContext;
+  lRTTITipo: TRttiType;
+  lRTTIAtributo: TCustomAttribute;
+begin
+  Result := False;
+  lRTTIContexto:= TRttiContext.Create;
+  lRTTITipo := lRTTIContexto.GetType(FFormularioBase.ClassType);
+  for lRTTIAtributo in lRTTITipo.GetAttributes do
+    if lRTTIAtributo is TDesabilitaCamposAtributes then
+    begin
+      Result := TDesabilitaCamposAtributes(lRTTIAtributo).ValidarCampo(AFieldName);
+      Break;
+    end;
+end;
+
 function TBaseCadastroController.IniciarAcao(const AAcao: TTipoAcao): IBaseCadastro;
 begin
   result := Self;
@@ -223,19 +333,26 @@ begin
   end;
 end;
 
+procedure TBaseCadastroController.CapturaChavePrimaria;
+var
+  lField: TField;
+begin
+  for lField in FDataSourcePrincipal.DataSet.Fields do
+  begin
+    if lField.datatype = ftAutoInc then
+    begin
+      FPrimariKeyFieldBase := lField;
+      Exit;
+    end;
+  end;
+end;
+
 procedure TBaseCadastroController.GerarEditsAutomatico;
 var
   lField: TField;
   lTabSheetCadastro: TTabSheet;
   lTop, lLeft: Integer;
 begin
-  for lField in FDataSourcePrincipal.DataSet.Fields do
-  begin
-    case lField.datatype of
-      ftAutoInc: FFieldAutoIncremento := lField;
-    end;
-  end;
-
   if not FGeraEdits then
     Exit;
 
@@ -244,6 +361,9 @@ begin
   lLeft:= lTabSheetCadastro.Left + csPOSICAO_LEFT_EDIT;
   for lField in FDataSourcePrincipal.DataSet.Fields do
   begin
+    if ValidarCampoVisivel(lField.FieldName) then
+      Continue;
+
     case lField.datatype of
       ftString, ftWideString, ftInteger, ftLargeint, ftAutoInc, ftDate, ftDateTime, ftTimeStamp:
         ConstruirEdit(lTabSheetCadastro, lField, lTop, lLeft);
@@ -357,6 +477,9 @@ begin
     ConfigurarBasePrincipal(FDBGridListagem.DataSource);
     for lField in FDataSourcePrincipal.DataSet.Fields do
     begin
+      if ValidarCampoVisivel(lField.FieldName) then
+        Continue;
+
       lColuna := FDBGridListagem.Columns.Add;
       lColuna.Field := lField;
       lColuna.Title.Caption := lField.DisplayLabel;
@@ -366,13 +489,14 @@ begin
   end;
 end;
 
-procedure TBaseCadastroController.ColetaFrames;
+procedure TBaseCadastroController.ColetarFrames;
 var
   lRTTIContexto: TRttiContext;
   lRTTITipo, lRTTITipoFrame: TRttiType;
   lRTTIField, lRTTIFieldFrame: TRttiField;
   lFrame: TFrame;
   lDataSource: TDataSource;
+  lDataSorceshared: TFDQuery;
 begin
   lDataSource := nil;
   lRTTIContexto:= TRttiContext.Create;
@@ -390,6 +514,10 @@ begin
           lDataSource:= TDataSource(lRTTIFieldFrame.GetValue(lFrame).AsObject);
           break
         end;
+        lDataSorceshared := (lDataSource.DataSet as TFDQuery);
+        lDataSorceshared.MasterSource := FDataSourcePrincipal;
+        lDataSorceshared.MasterFields := FPrimariKeyFieldBase.FieldName;
+        lDataSorceshared.IndexFieldNames := FPrimariKeyFieldBase.FieldName;
         FListaDataFrames.Add(lFrame,lDataSource)
     end;
 end;
@@ -433,19 +561,18 @@ begin
   lRTTITipo := lRTTIContexto.GetType(FFormularioBase.ClassType);
   for lRTTIMetodo in lRTTITipo.GetMethods do
     for lRTTIAtributo in lRTTIMetodo.GetAttributes do      
-      if lRTTIAtributo is TValidaCamposAtributes then
+      if lRTTIAtributo is TEventoOnExitAtributes then
       begin
-        lNomeComponent := format(csPREFIXO_EDIT,[TValidaCamposAtributes(lRTTIAtributo).NomeCampo]);
+        lNomeComponent := format(csPREFIXO_EDIT,[TEventoOnExitAtributes(lRTTIAtributo).NomeCampo]);
         if Assigned(FListaTabSheets.Items[csEdicao].FindComponent(lNomeComponent)) then
         begin
           lLabelEditComponente :=  TDBLabeledEdit(FListaTabSheets.Items[csEdicao].FindComponent(lNomeComponent));
           lRTTITipoEdit := lRTTIContexto.GetType(lLabelEditComponente.ClassType);
-          lRTTIProperty := lRTTITipoEdit.GetProperty('OnExit');
+          lRTTIProperty := lRTTITipoEdit.GetProperty(csEVENTO_ONEXIT);
           lHandlerMetodo.Code := lRTTIMetodo.CodeAddress;
           lHandlerMetodo.Data := lLabelEditComponente;
           lRTTIProperty.SetValue(lLabelEditComponente,TValue.From<TNotifyEvent>(TNotifyEvent(lHandlerMetodo)));          
         end;
-        
         FGeraEdits := TTituloFormAtributes(lRTTIAtributo).GeraEdits;
       end;
 end;

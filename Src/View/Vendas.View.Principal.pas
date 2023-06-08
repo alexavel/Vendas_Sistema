@@ -21,10 +21,17 @@ type
     actFornecedor: TAction;
     actProduto: TAction;
     actVenda: TAction;
+    Relatrios1: TMenuItem;
+    ListagemdeClientes1: TMenuItem;
+    actReportCliente: TAction;
+    actReportVenda: TAction;
+    actReportVenda1: TMenuItem;
     procedure actClienteExecute(Sender: TObject);
     procedure actFornecedorExecute(Sender: TObject);
     procedure actProdutoExecute(Sender: TObject);
     procedure actVendaExecute(Sender: TObject);
+    procedure actReportClienteExecute(Sender: TObject);
+    procedure actReportVendaExecute(Sender: TObject);
   private
     procedure AbrirFormulario(AFrm: TFormClass);
   end;
@@ -35,7 +42,8 @@ var
 implementation
 
 uses
-  Vendas.View.Cliente, Vendas.View.Fornecedor, Vendas.View.Produto, Vendas.View.Venda;
+  Vendas.View.Cliente, Vendas.View.Fornecedor, Vendas.View.Produto, Vendas.View.Venda,
+  Vendas.View.Report.Cliente, Vendas.View.Report.Venda;
 
 {$R *.dfm}
 
@@ -64,6 +72,16 @@ end;
 procedure TfrmMain.actProdutoExecute(Sender: TObject);
 begin
   AbrirFormulario(TfrmProduto);
+end;
+
+procedure TfrmMain.actReportClienteExecute(Sender: TObject);
+begin
+  AbrirFormulario(TfrmReportCliente);
+end;
+
+procedure TfrmMain.actReportVendaExecute(Sender: TObject);
+begin
+  AbrirFormulario(TfrmReportVenda);
 end;
 
 procedure TfrmMain.actVendaExecute(Sender: TObject);

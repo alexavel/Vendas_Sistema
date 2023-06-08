@@ -6,6 +6,15 @@ uses
   Vendas.Interfaces.BaseCadastro;
 
 type
+  TDesabilitaCamposAtributes = class(TCustomAttribute)
+  private
+    FCampo: string;
+  public
+    constructor Create(ACampo: string);
+    function ValidarCampo(const ACampoField: string): Boolean;
+    property Campo: string read FCampo write FCampo;
+  end;
+
   TAcoesAtributes = class(TCustomAttribute)
   private
     FTipoAcao: TTipoAcao;
@@ -32,7 +41,7 @@ type
     property GeraEdits: Boolean read FGeraEdits write FGeraEdits;
   end;
 
-  TValidaCamposAtributes = class(TCustomAttribute)
+  TEventoOnExitAtributes = class(TCustomAttribute)
   private
     FNomeCampo: String;
   public
@@ -67,11 +76,24 @@ begin
   FGeraEdits:= AGeraEdits;
 end;
 
-{ TValidaCamposAtributes }
+{ TEventoOnExitAtributes }
 
-constructor TValidaCamposAtributes.Create(ANomeCampo: String);
+constructor TEventoOnExitAtributes.Create(ANomeCampo: String);
 begin
   FNomeCampo := ANomeCampo;
+end;
+
+{ TDesabilitaCamposAtributes }
+
+constructor TDesabilitaCamposAtributes.Create(ACampo: string);
+begin
+  FCampo := ACampo;
+end;
+
+function TDesabilitaCamposAtributes.ValidarCampo(
+  const ACampoField: string): Boolean;
+begin
+  result :=  ACampoField = FCampo;
 end;
 
 end.

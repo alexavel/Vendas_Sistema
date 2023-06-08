@@ -242,8 +242,12 @@ object dmVendas: TdmVendas
   object qryVenda: TFDQuery
     Connection = fdConetor
     SQL.Strings = (
-      'SELECT * '
-      '  FROM VENDA')
+      
+        #9'SELECT VD.cdVenda, VD.cdcliente, CL.deNomeCliente, VD.dtEmissao' +
+        ', VD.flStatus  '
+      #9'  FROM VENDA VD'
+      '  LEFT JOIN CLIENTE CL'
+      '         ON CL.cdCliente = VD.cdcliente ')
     Left = 224
     Top = 304
     object qryVendacdVenda: TFDAutoIncField
@@ -258,6 +262,16 @@ object dmVendas: TdmVendas
       FieldName = 'cdcliente'
       Origin = 'cdcliente'
     end
+    object qryVendadeNomeCliente: TStringField
+      DisplayLabel = 'Nome do Cliente'
+      FieldName = 'deNomeCliente'
+      LookupDataSet = qryCliente
+      LookupKeyFields = 'cdCliente'
+      LookupResultField = 'deNomeCliente'
+      Origin = 'deNomeCliente'
+      ProviderFlags = []
+      Size = 100
+    end
     object qryVendadtEmissao: TSQLTimeStampField
       DisplayLabel = 'Data Venda'
       FieldName = 'dtEmissao'
@@ -265,7 +279,7 @@ object dmVendas: TdmVendas
       EditMask = '!99/99/0000;1;_'
     end
     object qryVendaflStatus: TBooleanField
-      DisplayLabel = 'Status'
+      DisplayLabel = 'Efetivada'
       FieldName = 'flStatus'
       Origin = 'flStatus'
     end
@@ -285,8 +299,12 @@ object dmVendas: TdmVendas
   object qryVendaItem: TFDQuery
     Connection = fdConetor
     SQL.Strings = (
-      'SELECT * '
-      '  FROM VENDA_ITEM')
+      
+        #9'SELECT VD.cdVendaitem, VD.cdvenda, VD.cdProduto, P.deDescricao,' +
+        ' VD.nuQuantidade, VD.vlUnitario, VD.vlTotal, VD.flStatus '
+      #9'  FROM VENDA_ITEM VD'
+      '  LEFT JOIN PRODUTO P '#9'  '
+      '         ON P.cdProduto = VD.cdProduto ')
     Left = 224
     Top = 368
     object qryVendaItemcdVendaitem: TFDAutoIncField
@@ -305,6 +323,13 @@ object dmVendas: TdmVendas
       DisplayLabel = 'C'#243'd. Produto'
       FieldName = 'cdProduto'
       Origin = 'cdProduto'
+    end
+    object qryVendaItemdeDescricao: TStringField
+      DisplayLabel = 'Nome do Produto'
+      FieldName = 'deDescricao'
+      Origin = 'deDescricao'
+      ProviderFlags = []
+      Size = 100
     end
     object qryVendaItemnuQuantidade: TIntegerField
       DisplayLabel = 'Quantidade'

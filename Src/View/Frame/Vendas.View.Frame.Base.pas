@@ -49,6 +49,7 @@ type
     procedure ConfigurarTela;
   public
     constructor Create(AOwner: TComponent); override;
+
     property RotinaExterna: TRotinaExterna read FRotinaExterna write FRotinaExterna;
   end;
 
