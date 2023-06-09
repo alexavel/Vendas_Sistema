@@ -27,7 +27,8 @@ uses
   Vendas.View.Report.Cliente in 'Src\View\Report\Vendas.View.Report.Cliente.pas' {frmReportCliente},
   Vendas.View.Printer.Cliente in 'Src\View\Printers\Vendas.View.Printer.Cliente.pas' {frmPrinterCliente},
   Vendas.View.Report.Venda in 'Src\View\Report\Vendas.View.Report.Venda.pas' {frmReportVenda},
-  Vendas.View.Printer.Venda in 'Src\View\Printers\Vendas.View.Printer.Venda.pas' {frmPrinterVenda};
+  Vendas.View.Printer.Venda in 'Src\View\Printers\Vendas.View.Printer.Venda.pas' {frmPrinterVenda},
+  Vendas.Controller.Vendas.Item in 'Src\Controller\Vendas.Controller.Vendas.Item.pas';
 
 {$R *.res}
 

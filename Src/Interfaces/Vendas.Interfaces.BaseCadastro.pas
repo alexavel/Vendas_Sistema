@@ -20,6 +20,10 @@ type
   TDicionarioTabSheets = TDictionary<TArrayAcao,TTabSheet>;
   TDicionarioDataSourceFrame = TDictionary<Tframe,TDataSource>;
 
+  IBaseCadastro = interface;
+
+  TRotinaGravaAutomatico = reference to function: IBaseCadastro;
+
   IBaseCadastro = interface
     ['{AD0F9E33-AE8B-4E76-A8F0-6DFFAF390D3C}']
     /// <summary>
@@ -28,7 +32,9 @@ type
     /// <param name="AAcao">
     ///   Parâmetro que instância uma ação no CRUD do tipo: taNovo, taEditar, taExcluir...
     /// </param>
-    function IniciarAcao(const AAcao: TTipoAcao) : IBaseCadastro;
+    function IniciarAcao(const AAcao: TTipoAcao): IBaseCadastro;
+    function SetGravaAutomatico(AProcedimento: TRotinaGravaAutomatico):IBaseCadastro;
+    function GetGravaAutomatico: TRotinaGravaAutomatico;
   end;
 
 implementation

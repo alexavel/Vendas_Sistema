@@ -176,6 +176,7 @@
             <Form>frmPrinterVenda</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Src\Controller\Vendas.Controller.Vendas.Item.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

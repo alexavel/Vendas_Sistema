@@ -46,11 +46,14 @@ type
   private
     FControllerFrame: IBaseCadastro;
     FRotinaExterna: TRotinaExterna;
+    FGravarAutomatico: TRotinaGravaAutomatico;
     procedure ConfigurarTela;
   public
     constructor Create(AOwner: TComponent); override;
 
     property RotinaExterna: TRotinaExterna read FRotinaExterna write FRotinaExterna;
+    property GravarAutomatico: TRotinaGravaAutomatico read FGravarAutomatico write FGravarAutomatico;
+    property ControllerFrame: IBaseCadastro read FControllerFrame write FControllerFrame;
   end;
 
 implementation

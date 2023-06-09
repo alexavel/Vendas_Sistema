@@ -13,6 +13,7 @@ type
   [TTituloFormAtributes('Tela de Vendas', true)]
   TfrmVenda = class(TfrmBaseCadastro)
     frameVendaItem: TframeVendaItem;
+    procedure FormCreate(Sender: TObject);
   public
     [TEventoOnExitAtributes('cdCliente')]
     procedure VerificarCliente(Sender: TObject);
@@ -26,6 +27,12 @@ uses
 {$R *.dfm}
 
 { TfrmVenda }
+
+procedure TfrmVenda.FormCreate(Sender: TObject);
+begin
+  inherited;
+  frameVendaItem.GravarAutomatico := GetGravarAutomatico;
+end;
 
 procedure TfrmVenda.VerificarCliente(Sender: TObject);
 begin

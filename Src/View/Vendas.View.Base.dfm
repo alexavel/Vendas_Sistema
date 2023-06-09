@@ -5,8 +5,8 @@ object frmBaseCadastro: TfrmBaseCadastro
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'frmBaseCadastro'
-  ClientHeight = 446
-  ClientWidth = 670
+  ClientHeight = 444
+  ClientWidth = 662
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,12 +22,14 @@ object frmBaseCadastro: TfrmBaseCadastro
   object pgBaseCadasro: TPageControl
     Left = 0
     Top = 0
-    Width = 540
-    Height = 427
+    Width = 532
+    Height = 425
     CustomHint = hitBalao
     ActivePage = tbsListagem
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 540
+    ExplicitHeight = 427
     object tbsListagem: TTabSheet
       CustomHint = hitBalao
       Caption = 'Listagem'
@@ -69,14 +71,16 @@ object frmBaseCadastro: TfrmBaseCadastro
   end
   object pnlSide: TPanel
     AlignWithMargins = True
-    Left = 543
+    Left = 535
     Top = 3
     Width = 124
-    Height = 421
+    Height = 419
     CustomHint = hitBalao
     Align = alRight
     BevelOuter = bvNone
     TabOrder = 1
+    ExplicitLeft = 543
+    ExplicitHeight = 421
     object btnCancelar: TButton
       AlignWithMargins = True
       Left = 5
@@ -171,11 +175,13 @@ object frmBaseCadastro: TfrmBaseCadastro
   end
   object stbFooter: TStatusBar
     Left = 0
-    Top = 427
-    Width = 670
+    Top = 425
+    Width = 662
     Height = 19
     CustomHint = hitBalao
     Panels = <>
+    ExplicitTop = 427
+    ExplicitWidth = 670
   end
   object actBaseFormulario: TActionList
     Tag = 6

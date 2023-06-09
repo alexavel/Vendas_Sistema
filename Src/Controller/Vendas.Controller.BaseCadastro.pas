@@ -24,6 +24,7 @@ Type
     FDBGridListagem: TDBGrid;
     FGeraEdits: Boolean;
     FPrimariKeyFieldBase: TField;
+    FGravaAutomaticoProc: TRotinaGravaAutomatico;
     /// <summary>
     /// Faz coleta dos atributos associados ao CRUD
     /// </summary>
@@ -135,6 +136,10 @@ Type
     ///  Cria uma lista com os eventos do CRUD
     /// </summary>
     property ListaAcoes: TDicionarioAcoes read FListaAcoes write FListaAcoes;
+    /// <summary>
+    /// Grava um registro Automaticamento
+    /// </summary>
+    function GravarAutomatico: IBaseCadastro;
   public
     /// <summary>
     ///  Instancia o controle
@@ -144,13 +149,15 @@ Type
     /// </param>
     class function New(AEmbedded: TForm): IBaseCadastro;
     function IniciarAcao(const AAcao: TTipoAcao): IBaseCadastro;
+    function SetGravaAutomatico(AProcedimento: TRotinaGravaAutomatico):IBaseCadastro;
+    function GetGravaAutomatico: TRotinaGravaAutomatico;
     destructor Destroy; override;
   end;
 
 implementation
 
 uses
-  Vendas.Dao;
+  Vendas.Dao, Vendas.View.Frame.Base;
 
 resourcestring
   csPREFIXO_CHECKBOX = 'chk%s';
@@ -223,7 +230,7 @@ begin
       begin
         lDataSet:= FListaDataFrames[lFrame].DataSet;
 //        lField := lDataSet.FindField(FPrimariKeyFieldBase.FieldName);
-        if lDataSet.State in dsEditModes then
+        if (lDataSet.State in dsEditModes) and (not lDataSet.IsEmpty)  then
         begin
           lDataSet.post;
 //          lDataSet.First;
@@ -252,6 +259,15 @@ begin
                             +#13
                             +e.Message);
     end;
+  end;
+end;
+
+function TBaseCadastroController.GravarAutomatico: IBaseCadastro;
+begin
+  if ( FAcaoAtual = taNovo) then
+  begin
+    Gravar;
+    FAcaoAtual := taEditar;
   end;
 end;
 
@@ -299,6 +315,13 @@ begin
     FPageBaseCadasro.ActivePage :=  FListaTabSheets.Items[csVizualizacao]
   else
     FPageBaseCadasro.ActivePage :=  FListaTabSheets.Items[csEdicao];
+end;
+
+function TBaseCadastroController.SetGravaAutomatico(
+  AProcedimento: TRotinaGravaAutomatico): IBaseCadastro;
+begin
+  Result := Self;
+  FGravaAutomaticoProc := AProcedimento;
 end;
 
 function TBaseCadastroController.ValidarCampoVisivel(
@@ -373,6 +396,11 @@ begin
         ConstruirEdit(lTabSheetCadastro, lField, lTop, lLeft);
     end;
   end;
+end;
+
+function TBaseCadastroController.GetGravaAutomatico: TRotinaGravaAutomatico;
+begin
+  Result := Gravar;
 end;
 
 procedure TBaseCadastroController.ConstruirEdit(ATabSheetCadastro: TTabSheet;
@@ -518,6 +546,7 @@ begin
         lDataSorceshared.MasterSource := FDataSourcePrincipal;
         lDataSorceshared.MasterFields := FPrimariKeyFieldBase.FieldName;
         lDataSorceshared.IndexFieldNames := FPrimariKeyFieldBase.FieldName;
+        TframeBase(lFrame).ControllerFrame.SetGravaAutomatico(GravarAutomatico);
         FListaDataFrames.Add(lFrame,lDataSource)
     end;
 end;

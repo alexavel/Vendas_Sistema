@@ -51,8 +51,10 @@ type
     procedure FormShow(Sender: TObject);
   private
     FBaseCadastro: IBaseCadastro;
+    FGetGravarAutomatico: TRotinaGravaAutomatico;
     procedure ConfigurarTela;
   public
+    property GetGravarAutomatico: TRotinaGravaAutomatico read FGetGravarAutomatico write FGetGravarAutomatico;
   end;
 
 implementation
@@ -100,6 +102,8 @@ end;
 procedure TfrmBaseCadastro.FormCreate(Sender: TObject);
 begin
   FBaseCadastro := TBaseCadastroController.New(Self);
+  FGetGravarAutomatico := FBaseCadastro.GetGravaAutomatico;
+ // FFrameBase.SetGravaAutomatico(FGravarAutomatico);
   ConfigurarTela;
 end;
 

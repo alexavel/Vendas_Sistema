@@ -24,6 +24,7 @@ Type
     FDBGridListagemFrame: TDBGrid;
     FGeraEdits: Boolean;
     FPrimariKeyFieldBase: TField;
+    FGravaAutomaticoProc: TRotinaGravaAutomatico;
     /// <summary>
     /// Faz coleta dos atributos associados ao FRAME
     /// </summary>
@@ -141,6 +142,8 @@ Type
     class function New(AEmbedded: TFrame): IBaseCadastro;
     function IniciarAcao(const AAcao: TTipoAcao): IBaseCadastro;
     destructor Destroy; override;
+    function SetGravaAutomatico(AProcedimento: TRotinaGravaAutomatico):IBaseCadastro;
+    function GetGravaAutomatico: TRotinaGravaAutomatico;
   end;
 
 implementation
@@ -191,6 +194,9 @@ end;
 
 function TBaseFrameController.Novo: IBaseCadastro;
 begin
+  if Assigned(FGravaAutomaticoProc) then
+    FGravaAutomaticoProc;
+
   FDataSourceFrame.DataSet.Append;
 end;
 
@@ -206,7 +212,7 @@ end;
 
 function TBaseFrameController.Gravar: IBaseCadastro;
 begin
-  //FDBGridListagemFrame.DataSource.DataSet.EnableControls;
+ FDataSourceFrame.DataSet.Post;
 end;
 
 function TBaseFrameController.Cancelar: IBaseCadastro;
@@ -253,6 +259,13 @@ begin
     FPageBaseCadasroFrame.ActivePage :=  FListaTabSheetsFrame.Items[csVizualizacao]
   else
     FPageBaseCadasroFrame.ActivePage :=  FListaTabSheetsFrame.Items[csEdicao];
+end;
+
+function TBaseFrameController.SetGravaAutomatico(
+  AProcedimento: TRotinaGravaAutomatico): IBaseCadastro;
+begin
+  Result := Self;
+  FGravaAutomaticoProc := AProcedimento;
 end;
 
 function TBaseFrameController.ValidarCampoVisivel(
@@ -325,6 +338,11 @@ begin
         ConstruirEdit(lTabSheetCadastro, lField, lTop, lLeft);
     end;
   end;
+end;
+
+function TBaseFrameController.GetGravaAutomatico: TRotinaGravaAutomatico;
+begin
+  result := Gravar;
 end;
 
 procedure TBaseFrameController.ConstruirEdit(ATabSheetCadastro: TTabSheet;
