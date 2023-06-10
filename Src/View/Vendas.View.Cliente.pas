@@ -29,7 +29,7 @@ procedure TfrmCliente.VerificarCPF(Sender: TObject);
 begin
   var lControleCliente := TClienteController.New(Sender);
   try
-    lControleCliente.ValidarCPF;
+    if lControleCliente.ValidarCPF then
   finally
     lControleCliente.Free;
   end;

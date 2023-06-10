@@ -1,21 +1,21 @@
 inherited frmCliente: TfrmCliente
   Caption = 'frmCliente'
   ClientWidth = 670
-  ExplicitHeight = 483
+  ExplicitWidth = 682
   TextHeight = 15
   inherited pgBaseCadasro: TPageControl
     Width = 540
     ExplicitWidth = 536
-    ExplicitHeight = 425
+    ExplicitHeight = 424
     inherited tbsListagem: TTabSheet
-      ExplicitHeight = 396
+      ExplicitWidth = 532
       inherited dbgListagem: TDBGrid
         Width = 532
-        Height = 396
+        Height = 395
       end
     end
     inherited tbsFormulario: TTabSheet
-      ExplicitHeight = 396
+      ExplicitWidth = 532
       inherited gpbDetalhes: TGroupBox
         Width = 526
         Height = 390
@@ -27,15 +27,15 @@ inherited frmCliente: TfrmCliente
   inherited pnlSide: TPanel
     Left = 543
     ExplicitLeft = 539
-    ExplicitHeight = 419
+    ExplicitHeight = 418
     inherited btnSair: TButton
-      Top = 390
-      ExplicitTop = 389
+      Top = 389
+      ExplicitTop = 388
     end
   end
   inherited stbFooter: TStatusBar
     Width = 670
-    ExplicitTop = 425
+    ExplicitTop = 424
     ExplicitWidth = 666
   end
   inherited dsBase: TDataSource

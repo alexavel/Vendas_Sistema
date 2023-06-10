@@ -55,6 +55,7 @@ type
     procedure ConfigurarTela;
   public
     property GetGravarAutomatico: TRotinaGravaAutomatico read FGetGravarAutomatico write FGetGravarAutomatico;
+    property BaseCadastroControle: IBaseCadastro read FBaseCadastro write FBaseCadastro;
   end;
 
 implementation

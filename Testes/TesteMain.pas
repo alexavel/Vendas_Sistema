@@ -19,9 +19,9 @@ type
     procedure Test1;
     // Test with TestCase Attribute to supply parameters.
     [Test]
-    [TestCase('TestA','1,2')]
-    [TestCase('TestB','3,4')]
-    procedure Test2(const AValue1 : Integer;const AValue2 : Integer);
+    [TestCase('TestA','1,2','3')]
+    [TestCase('TestB','3,4','7')]
+    procedure Test2(const AValue1: Integer; const AValue2:Integer; const AResult: Integer);
   end;
 
 implementation
@@ -36,10 +36,15 @@ end;
 
 procedure TVendaTeste.Test1;
 begin
+  Assert.AreEqual(1,1, 'teste')
 end;
 
-procedure TVendaTeste.Test2(const AValue1 : Integer;const AValue2 : Integer);
+procedure TVendaTeste.Test2(const AValue1: Integer; const AValue2:Integer; const AResult: Integer);
+var
+  lSum: Integer;
 begin
+  lSum:= AValue1 + AValue2;
+  Assert.AreEqual(lSum,AResult);
 end;
 
 initialization

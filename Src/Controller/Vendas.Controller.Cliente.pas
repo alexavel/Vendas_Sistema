@@ -12,7 +12,7 @@ Type
     constructor Create(AEmbeded: TObject);
   public
     class function New(AEmbeded: TObject): TClienteController;
-    function ValidarCPF: TClienteController;
+    function ValidarCPF: boolean;
   end;
 
 implementation
@@ -32,14 +32,15 @@ begin
   Result := Self.Create(AEmbeded)
 end;
 
-function TClienteController.ValidarCPF: TClienteController;
+function TClienteController.ValidarCPF: boolean;
 begin
-  result := Self;
+  result := true;
   var lLabeledEdit := TDBLabeledEdit(FComponentEmbeded);
   if not TUtilsRotinas.ValidaCPF(lLabeledEdit.Text) then
   begin
     lLabeledEdit.Clear;
     lLabeledEdit.SetFocus;
+    Exit(false);
   end;
 end;
 

@@ -10,12 +10,25 @@ uses
   TestInsight.DUnitX,
   {$ELSE}
   DUnitX.Loggers.Console,
-  DUnitX.Loggers.Xml.NUnit,
   {$ENDIF }
   DUnitX.TestFramework,
-  TesteMain in 'TesteMain.pas';
+  TesteMain in 'TesteMain.pas',
+  TesteCliente in 'TesteCliente.pas',
+  Vendas.Dao in '..\Src\Dao\Vendas.Dao.pas' {dmVendas: TDataModule},
+  Vendas.Controller.BaseCadastro in '..\Src\Controller\Vendas.Controller.BaseCadastro.pas',
+  Vendas.Interfaces.BaseCadastro in '..\Src\Interfaces\Vendas.Interfaces.BaseCadastro.pas',
+  Vendas.Interfaces.BaseReport in '..\Src\Interfaces\Vendas.Interfaces.BaseReport.pas',
+  Vendas.Classes.Atributo in '..\Src\Classes\Vendas.Classes.Atributo.pas',
+  Vendas.Classes.NotifyEvents in '..\Src\Classes\Vendas.Classes.NotifyEvents.pas',
+  Vendas.Classes.Utils in '..\Src\Classes\Vendas.Classes.Utils.pas',
+  Vendas.View.Base in '..\Src\View\Vendas.View.Base.pas' {frmBaseCadastro},
+  Vendas.View.Frame.Base in '..\Src\View\Frame\Vendas.View.Frame.Base.pas' {frameBase: TFrame},
+  Vendas.Controller.BaseFrame in '..\Src\Controller\Vendas.Controller.BaseFrame.pas',
+  Vendas.View.Cliente in '..\Src\View\Vendas.View.Cliente.pas' {frmCliente},
+  Vendas.Controller.Cliente in '..\Src\Controller\Vendas.Controller.Cliente.pas';
 
-{$IFNDEF TESTINSIGHT}
+{$IFDEF TESTINSIGHT}
+{$ELSE}
 var
   runner: ITestRunner;
   results: IRunResults;
@@ -43,9 +56,9 @@ begin
       logger := TDUnitXConsoleLogger.Create(TDUnitX.Options.ConsoleMode = TDunitXConsoleMode.Quiet);
       runner.AddLogger(logger);
     end;
-    //Generate an NUnit compatible XML File
-    nunitLogger := TDUnitXXMLNUnitFileLogger.Create(TDUnitX.Options.XMLOutputFile);
-    runner.AddLogger(nunitLogger);
+//    //Generate an NUnit compatible XML File
+//    nunitLogger := TDUnitXXMLNUnitFileLogger.Create(TDUnitX.Options.XMLOutputFile);
+//    runner.AddLogger(nunitLogger);
 
     //Run tests
     results := runner.Execute;
